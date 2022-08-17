@@ -25,12 +25,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<select id="userList" resultType="UserDTO">
-		select * from users where enabled = 0
+		select * from users where
+		enabled = 0
 	</select>
 
 	<select id="userDetail" resultType="UserDTO">
 		select * from users where
 		userId = #{userId}
 	</select>
+
+	<update id="upgradeuser">
+		update users set enabled = #{enabled}, authority =
+		#{authority} where userId = #{userId}
+	</update>
 
 </mapper>

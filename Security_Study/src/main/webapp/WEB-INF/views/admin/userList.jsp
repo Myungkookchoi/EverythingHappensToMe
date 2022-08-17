@@ -21,7 +21,7 @@
 		</thead>
 		<c:forEach items="${list}" var="UserDto">
 			<tr>
-				<td>${UserDto.userName }</td>
+				<td><a href="userDetail?userId=${UserDto.userId }">${UserDto.userName }</a></td>
 				<td>${UserDto.userId }</td>
 				<td><fmt:formatDate pattern="yyyy-MM-dd"
 						value="${UserDto.userBirth}" /></td>

@@ -14,4 +14,6 @@ public interface UserService {
 	public ArrayList<UserDto> userList() throws Exception;
 
 	public UserDto userDetail(String userId) throws Exception;
+
+	public void upgradeuser(UserDto dto) throws Exception;
 }

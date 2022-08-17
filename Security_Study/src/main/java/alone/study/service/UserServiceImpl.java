@@ -45,4 +45,10 @@ public class UserServiceImpl implements UserService {
 		return dao.userDetail(userId);
 	}
 
+	@Override
+	public void upgradeuser(UserDto dto) throws Exception {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		dao.upgradeuser(dto);
+	}
+
 }
