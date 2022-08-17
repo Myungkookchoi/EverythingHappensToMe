@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="alone.study.dao.UserDao">
+
+	<insert id="create">
+		insert into users(
+		userName, userId, userPassword,
+		userBirth
+		) values (
+		#{userName}, #{userId}, #{userPassword},
+		#{userBirth}
+		)
+	</insert>
+
+	<update id="update">
+		update users set userName = #{userName}, userPassword
+		= #{userPassword}, userBirth = #{userBirth} where userId = #{userId}
+	</update>
+
+	<delete id="delete">
+		delete users where userId = #{userId}
+	</delete>
+
+	<select id="userList" resultType="UserDTO">
+		select * from users where enabled = 0
+	</select>
+
+	<select id="userDetail" resultType="UserDTO">
+		select * from users where
+		userId = #{userId}
+	</select>
+
+</mapper>
