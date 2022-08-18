@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import alone.study.dto.UserDto;
 import alone.study.service.UserService;
@@ -22,20 +23,22 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(value = "/userList", method = RequestMethod.GET)
+	@RequestMapping(value = "/authority/userList", method = RequestMethod.GET)
 	public void userList(Model model) throws Exception {
 		model.addAttribute("list", service.userList());
+		model.addAttribute("noEnabled", service.noEnabledUserList());
 	}
 
-	@RequestMapping(value = "/userDetail", method = RequestMethod.GET)
+	@RequestMapping(value = "/authority/userDetail", method = RequestMethod.GET)
 	public void userDetailGET(@RequestParam("userId") String userId, Model model) throws Exception {
 		model.addAttribute("detail", service.userDetail(userId));
 	}
 
-	@RequestMapping(value = "/userDetail", method = RequestMethod.POST)
-	public String userDetailPOST(UserDto dto, Model model) throws Exception {
+	@RequestMapping(value = "/authority/userDetail", method = RequestMethod.POST)
+	public String userDetailPOST(UserDto dto, Model model, RedirectAttributes rttr) throws Exception {
 		service.upgradeuser(dto);
-		return "/admin/userList";
+		rttr.addFlashAttribute("msg", "success");
+		return "redirect:/admin/authority/userList";
 	}
 
 }

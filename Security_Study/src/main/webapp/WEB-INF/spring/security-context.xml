@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <beans:beans
 	xmlns="http://www.springframework.org/schema/security"
 	xmlns:beans="http://www.springframework.org/schema/beans"
@@ -10,6 +11,19 @@
 	<beans:bean id="LoginSuccess"
 		class="alone.study.Handler.LoginRedirectHandler" />
 
+	<beans:bean id="LoginFail"
+		class="alone.study.Handler.LoginFailureHandler">
+		<beans:property name="loginidname" value="id" />
+		<beans:property name="loginpwname" value="password" />
+		<beans:property name="errormsgname" value="ERRORMSG" />
+		<beans:property name="defaultFailureUrl"
+			value="/user/login" />
+	</beans:bean>
+
+
+	<!-- <property name="errormsgname" value="ERRORMSG" /> -->
+	<!-- <property name="defaultFailureUrl" value="/secu/loginPage?error" /> -->
+
 	<!-- URL 설정 -->
 	<http use-expressions="true">
 		<csrf disabled="true" />
@@ -18,14 +32,22 @@
 		<intercept-url pattern="/member/**"
 			access="hasAnyRole('MEMBER,ADMIN')" />
 		<!-- <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" /> -->
-		<intercept-url pattern="/admin/**" access="permitAll" />
+		<intercept-url pattern="/admin/**"
+			access="hasAnyRole('ADMIN')" />
 
-		<form-login login-page="/user/login"
+		<form-login
+			login-page="/user/login"
+			login-processing-url="/user/login"
 			authentication-success-handler-ref="LoginSuccess"
-			default-target-url="/user/user"
-			authentication-failure-url="/user/login?error"
-			username-parameter="id" password-parameter="password" />
+			authentication-failure-handler-ref="LoginFail"
+			default-target-url="/user/user" 
+			username-parameter="id"
+			password-parameter="password" />
 		<logout logout-url="/user/logout" invalidate-session="true" />
+
+
+
+
 		<!--화면 없이 해당 주소로 오면 session이 지워지고 로그아웃이 진행됨 -->
 		<!-- 에러 났을 때 에러 처리하는 페이지 -->
 		<access-denied-handler error-page="/user/error" />

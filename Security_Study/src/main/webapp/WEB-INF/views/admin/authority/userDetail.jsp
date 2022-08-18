@@ -24,7 +24,8 @@
 
 			<tr>
 				<td>이름</td>
-				<td><input type="text" name="userName" value="${detail.userName }"></td>
+				<td><input type="text" name="userName"
+					value="${detail.userName }"></td>
 			</tr>
 			<tr>
 				<td>아이디</td>
@@ -46,6 +47,7 @@
 			<tr>
 				<td>등급</td>
 				<td><select id="target" name="authority">
+						<option value="ROLE_USER">유저</option>
 						<option value="ROLE_MEMBER">맴버</option>
 						<option value="ROLE_ADMIN">어드민</option>
 				</select></td>

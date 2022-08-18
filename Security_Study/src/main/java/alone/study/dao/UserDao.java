@@ -16,4 +16,8 @@ public interface UserDao {
 	public UserDto userDetail(String userId) throws Exception;
 
 	public void upgradeuser(UserDto dto) throws Exception;
+
+	public ArrayList<UserDto> noEnabledUserList() throws Exception;
+
+	public int checkid(String userId) throws Exception;
 }

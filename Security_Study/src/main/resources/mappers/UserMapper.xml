@@ -25,7 +25,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<select id="userList" resultType="UserDTO">
-		select * from users where
+		select * from users
+	</select>
+
+	<select id="noEnabledUserList" resultType="UserDTO">
+		select * from users
+		where
 		enabled = 0
 	</select>
 
@@ -39,4 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{authority} where userId = #{userId}
 	</update>
 
+	<select id="checkid" resultType="int">
+		select count(*) from users where
+		userId = #{userId}
+	</select>
 </mapper>

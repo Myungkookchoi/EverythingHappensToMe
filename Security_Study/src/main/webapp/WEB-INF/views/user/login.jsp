@@ -10,25 +10,34 @@
 <title>Insert title here</title>
 </head>
 <body>
-	login page
-	<c:if test="${param.error != null}">
-		<p>아이디와 비밀번호가 잘못되었습니다.</p>
-	</c:if>
-	<c:if test="${param.logout != null}">
-		<p>로그아웃 하였습니다.</p>
-	</c:if>
+	Login page
+	<%-- 	<c:if test="${param.noAuthority != null}"> --%>
+	<!-- 		<p>권한이 없습니다.</p> -->
+	<%-- 	</c:if> --%>
+	<%-- 	<c:if test="${param.noID != null}"> --%>
+	<!-- 		<p>로그인에 실패하였습니다.</p> -->
+	<%-- 	</c:if> --%>
+<%-- 	<c:if test="${param.logout != null}"> --%>
+<!-- 		<p>로그아웃 하였습니다.</p> -->
+<%-- 	</c:if> --%>
+	<%-- 	<c:if test="${param.hi != null}"> --%>
+	<!-- 		<p>로그인하였습니다.</p> -->
+	<%-- 	</c:if> --%>
+	<p>${ERRORMSG }</p>
 	<h3>아이디와 비밀번호를 입력해주세요.</h3>
 	<c:url value="/login" var="loginUrl" />
-	<form name="frmLogin" action="${loginUrl}" method="POST">
+	<form name="frmLogin" action="<c:url value='/user/login'/>"
+		method="POST">
 		<!-- csrf가 있어야 된다. -->
 		<input type="hidden" name="${_csrf.parameterName }"
 			value="${_csrf.token }" />
 		<p>
-			<label for="id">아이디</label> <input type="text" id="id" name="id" />
+			<label for="id">아이디</label> <input type="text" id="id" name="id"
+				value="${id }" />
 		</p>
 		<p>
 			<label for="password">비밀번호</label> <input type="password"
-				id="password" name="password" />
+				id="password" name="password" value="${password }" />
 		</p>
 		<button type="submit" class="btn">로그인</button>
 	</form>

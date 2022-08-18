@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	admin page
-	<a href="authority/userList">회원관리</a>
+	User Page
 	<a href="${pageContext.request.contextPath}/user/logout">로그아웃</a>
 </body>
 </html>

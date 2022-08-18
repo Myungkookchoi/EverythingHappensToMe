@@ -21,7 +21,12 @@ public class UserController {
 	UserService service;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public void userLogin() throws Exception {
+	public void userLoginGET() throws Exception {
+
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public void userLoginPOST() throws Exception {
 
 	}
 

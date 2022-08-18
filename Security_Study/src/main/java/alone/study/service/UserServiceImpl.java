@@ -51,4 +51,17 @@ public class UserServiceImpl implements UserService {
 		dao.upgradeuser(dto);
 	}
 
+	@Override
+	public ArrayList<UserDto> noEnabledUserList() throws Exception {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.noEnabledUserList();
+	}
+
+	@Override
+	public int checkid(String userId) throws Exception {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		int dto = dao.checkid(userId);
+		return dto;
+	}
+
 }
