@@ -42,7 +42,7 @@
 			authentication-failure-handler-ref="LoginFail"
 			default-target-url="/user/user" 
 			username-parameter="id"
-			password-parameter="password" />
+			password-parameter="password"/>
 		<logout logout-url="/user/logout" invalidate-session="true" />
 
 

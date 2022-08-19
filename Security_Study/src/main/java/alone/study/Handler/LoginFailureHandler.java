@@ -27,18 +27,22 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
+
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+
 		String username = request.getParameter(loginidname);
 		String password = request.getParameter(loginpwname);
 		String errormsg = null;
-
 		try {
 			if (service.checkid(username) == 0) {
 				errormsg = "존재하지 않는 아이디입니다.";
 			} else {
 				if (exception instanceof BadCredentialsException) {
-					errormsg = "비밀번호가 일치하지 않습니다";
+					errormsg = "비밀번호가 일치하지 않습니다.";
 				} else if (exception instanceof DisabledException) {
-					errormsg = "승인이 안 된 아이디입니다.";
+					errormsg = "승인되지 않은 아이디입니다.";
 				}
 			}
 

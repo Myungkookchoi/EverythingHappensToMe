@@ -8,39 +8,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/mk/resources/css/login_form.css">
+<script src="/mk/resources/js/login_form.js"></script>
 </head>
 <body>
-	Login page
-	<%-- 	<c:if test="${param.noAuthority != null}"> --%>
-	<!-- 		<p>권한이 없습니다.</p> -->
-	<%-- 	</c:if> --%>
-	<%-- 	<c:if test="${param.noID != null}"> --%>
-	<!-- 		<p>로그인에 실패하였습니다.</p> -->
-	<%-- 	</c:if> --%>
-<%-- 	<c:if test="${param.logout != null}"> --%>
-<!-- 		<p>로그아웃 하였습니다.</p> -->
-<%-- 	</c:if> --%>
-	<%-- 	<c:if test="${param.hi != null}"> --%>
-	<!-- 		<p>로그인하였습니다.</p> -->
-	<%-- 	</c:if> --%>
-	<p>${ERRORMSG }</p>
-	<h3>아이디와 비밀번호를 입력해주세요.</h3>
-	<c:url value="/login" var="loginUrl" />
-	<form name="frmLogin" action="<c:url value='/user/login'/>"
-		method="POST">
-		<!-- csrf가 있어야 된다. -->
-		<input type="hidden" name="${_csrf.parameterName }"
-			value="${_csrf.token }" />
-		<p>
-			<label for="id">아이디</label> <input type="text" id="id" name="id"
-				value="${id }" />
-		</p>
-		<p>
-			<label for="password">비밀번호</label> <input type="password"
-				id="password" name="password" value="${password }" />
-		</p>
-		<button type="submit" class="btn">로그인</button>
-	</form>
-	<a href="register">회원가입</a>
+		
+	<button onclick="document.getElementById('id01').style.display='block'"
+		style="width: auto;">Login</button>
+
+	<div id="id01" class="modal">
+
+		<form class="modal-content animate" name="frmLogin" action="<c:url value='/user/login'/>" method="POST">
+
+			<div class="imgcontainer">
+				<span onclick="document.getElementById('id01').style.display='none'"
+					class="close" title="Close Modal">&times;</span> <img
+					src="/mk/resources/img/login_img.png" alt="Avatar" class="avatar">
+			</div>
+			
+			<div class="container">
+			<p style="color: red;">${ERRORMSG }</p>
+				<h3>아이디와 비밀번호를 입력해주세요.</h3>
+				<label for="uname">
+					<b>아이디</b>
+				</label> 
+				<input type="text" placeholder="Enter ID" name="id" value="${id }" required> 
+				<label for="psw">
+					<b>비밀번호</b>
+				</label> 
+				<input type="password" placeholder="Enter Password"  name="password" value="${password }" required>
+				<button type="submit">로그인</button>
+				<label>
+					<input type="checkbox" checked="checked" name="remember"> Remember me
+				</label>
+			</div>
+
+			<div class="container" style="background-color: #f1f1f1">
+				<button type="button" onclick="document.getElementById('id01').style.display='none'"
+					class="cancelbtn">Cancel</button>
+				<span class="psw">Forgot <a href="#">password?</a></span>
+			</div>
+		</form>
+	</div>
+	
 </body>
 </html>
