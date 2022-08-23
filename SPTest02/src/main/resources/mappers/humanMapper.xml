@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.dao.HumanDao">
+	<insert id="create">
+		insert into human(name, height, age, birth)
+		values(#{name}, #{height}, #{age},
+		#{birth})
+	</insert>
+
+	<select id="read" resultType="HumanDto">
+		select * from human where name = #{name}
+	</select>
+
+	<delete id="delete">
+		delete from human where name = #{name}
+	</delete>
+
+	<update id="update">
+		update human set height=#{height},
+		age=#{age},
+		birth=#{birth} where name=#{name}
+	</update>
+
+	<select id="list" resultType="com.human.dto.HumanDto">
+		select * from human order by name desc
+		
+<!-- 		select h.name, height, age, birth, hobby from human h, hobby order by h.name desc -->
+	</select>
+</mapper>
