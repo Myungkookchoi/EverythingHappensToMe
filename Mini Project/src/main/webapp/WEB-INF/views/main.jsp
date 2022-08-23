@@ -39,8 +39,8 @@
 				<ul class="navbar-nav me-auto">
 
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-						<li class="nav-item"><a class="nav-link"
-							href="./admin/admin">관리자 페이지</a></li>
+						<li class="nav-item"><a class="nav-link" href="./admin/admin">관리자
+								페이지</a></li>
 					</sec:authorize>
 
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN, ROLE_USER')">
