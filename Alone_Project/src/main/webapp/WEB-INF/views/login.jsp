@@ -12,60 +12,95 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+	var check = 0;
 	function idCheck() {
+		var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
 		var data = {
 			'userId' : $('#userId').val()
 		};
-		var json = JSON.stringify(data);
-		$.ajax({
-			type : "POST",
-			url : "/mk/restful/checkid",
-			data : json,
-			dataType : 'json',
-			contentType : 'application/json; charset=UTF-8',
-			success : function(result) {
-				if (result == 0) {
-					$("#resultID").html('사용 할 수 있는 아이디입니다.');
-					$("#resultID").attr('color', 'green');
-				} else {
-					$("#resultID").html('사용 할 수 없는 아이디입니다.');
-					$("#resultID").attr('color', 'red');
+		if ($('#userId').val() == "") {
+			$('#resultID').html('아이디를 입력해주세요');
+			$('#resultID').attr('color', 'red');
+		} else if ($('#userId').val().length < 3) {
+			$('#resultID').html('3글자 이상으로 적어주세요.');
+			$('#resultID').attr('color', 'red');
+		} else if ($('#userId').val().search(/\s/) != -1) {
+			$('#resultID').html('아이디에 공백이 있습니다.');
+			$('#resultID').attr('color', 'red');
+		} else if (special_pattern.test($('#userId').val()) == true) {
+			$('#resultID').html('아이디에 특수문자가 있습니다.');
+			$('#resultID').attr('color', 'red');
+		} else {
+			var json = JSON.stringify(data);
+			$.ajax({
+				type : "POST",
+				url : "/mk/restful/checkid",
+				data : json,
+				dataType : 'json',
+				contentType : 'application/json; charset=UTF-8',
+				success : function(result) {
+					if (result == 0) {
+						$("#resultID").html('사용 할 수 있는 아이디입니다.');
+						$("#resultID").attr('color', 'green');
+						$("#registerbtn").attr('disabled', false);
+						check = 1;
+					} else {
+						$("#resultID").html('사용 할 수 없는 아이디입니다.');
+						$("#resultID").attr('color', 'red');
+					}
+				},
+				error : function() {
+					alert("오류");
 				}
-			},
-			error : function() {
-				alert("오류");
-			}
-		})
+			})
+		}
 	}
 
 	function register() {
-		var data = {
-			'userId' : $('#userId').val(),
-			'userPassword' : $('#userPassword').val(),
-			'userName' : $('#userName').val(),
-			'userBirth' : $('#userBirth').val()
-		};
-		var json = JSON.stringify(data);
-		alert(json);
-		$.ajax({
-			type : "POST",
-			url : "/mk/restful/register	",
-			data : json,
-			dataType : 'json',
-			contentType : 'application/json; charset=UTF-8',
-			success : function(result) {
-				if (result == 0) {
-					alert("처리 완료");
-					closeFun('register', 'login');
-				} else {
-					alert("회원가입 실패");
+		if (check == 0) {
+			alert("아이디 중복확인을 해주세요.");
+		} else {
+			var data = {
+				'userId' : $('#userId').val(),
+				'userPassword' : $('#userPassword').val(),
+				'userName' : $('#userName').val(),
+				'userBirth' : $('#userBirth').val()
+			};
+			var json = JSON.stringify(data);
+			alert(json);
+			$.ajax({
+				type : "POST",
+				url : "/mk/restful/register	",
+				data : json,
+				dataType : 'text',
+				contentType : 'application/json; charset=UTF-8',
+				success : function(result) {
+					console.log(result);
+					if (result == "SUCCESS") {
+						alert("회원가입이 완료되었습니다.");
+						console.log(result);
+						closeFun('register', 'login');
+						$('#userId').val(null);
+						$('#userPassword').val(null);
+						$('#userName').val(null);
+						$('#userBirth').val(null);
+					} else {
+						check = 0;
+						alert("회원가입 실패하였습니다.");
+					}
+
+				},
+				error : function(result) {
+					alert("오류가 발생하였습니다.");
+					console.log(result);
 				}
-			},
-			error : function() {
-				alert("오류");
-			}
-		})
+			})
+		}
 	}
+
+	$(document).ready(function() {
+		// 		alert($('#userId').val().length);
+	});
 </script>
 </head>
 <body>
@@ -162,7 +197,8 @@
 				</label> <input id="userName" type="text" placeholder="Enter Name"
 					name="userName" required> <label for="ubirth"> <b>생년월일</b>
 				</label> <input id="userBirth" type="date" name="userBirth" required>
-				<button type="button" onclick="register()">등록</button>
+				<button id="registerbtn" type="button" onclick="register()"
+					disabled="disabled">등록</button>
 				<br>
 			</div>
 

@@ -11,7 +11,7 @@
 	<http use-expressions="true">
 		<csrf disabled="true" />
 		<!--permitAll:모든 사용자 -->
-		<intercept-url pattern="/user/user" access="permitAll" />
+		<intercept-url pattern="/user/**" access="hasAnyRole('USER,MEMBER,ADMIN')" />
 		<intercept-url pattern="/member/**"
 			access="hasAnyRole('MEMBER,ADMIN')" />
 		<intercept-url pattern="/admin/**"
