@@ -49,10 +49,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{authority} where userId = #{userId}
 	</update>
 
+	<update id="changePassword">
+		update users set userPassword = #{userPassword} where
+		userId = #{userId}
+	</update>
+
 	<select id="checkid" parameterType="String" resultType="Integer">
 		select
 		count(*)
 		from users where
 		userId = #{userId}
+	</select>
+
+	<select id="findId" resultType="String">
+		select userId from users where
+		userName = #{userName} and userBirth = #{userBirth}
+	</select>
+
+	<select id="findPassword" resultType="Integer">
+		select count(*) from users
+		where userId = #{userId} and userName = #{userName} and userBirth =
+		#{userBirth}
 	</select>
 </mapper>

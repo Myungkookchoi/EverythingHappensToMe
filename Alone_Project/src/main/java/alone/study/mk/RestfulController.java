@@ -69,7 +69,6 @@ public class RestfulController {
 		UserDto dto = service.userDetail(userId);
 		map.put("detail", dto);
 		entity = new ResponseEntity<Map<String, UserDto>>(map, HttpStatus.OK);
-
 		return entity;
 	}
 
@@ -84,6 +83,41 @@ public class RestfulController {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
+		return entity;
+	}
+
+	@RequestMapping(value = "/changePassword/{userId}", method = RequestMethod.PUT)
+	public ResponseEntity<String> changePassword(@PathVariable("userId") String userId, @RequestBody UserDto dto) {
+		ResponseEntity<String> entity = null;
+		try {
+			dto.setUserPassword(passwordEncoder.encode(dto.getUserPassword()));
+			dto.setUserId(userId);
+			service.changePassword(dto);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+
+	@RequestMapping(value = "/findId", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> findId(@RequestBody UserDto dto) throws Exception {
+		ResponseEntity<String> entity = null;
+		entity = new ResponseEntity<String>(service.findId(dto), HttpStatus.OK);
+		return entity;
+	}
+
+	@RequestMapping(value = "/findPassword", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> findPassword(@RequestBody UserDto dto) throws Exception {
+		ResponseEntity<Map<String, Object>> entity = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = service.findPassword(dto);
+		map.put("userId", dto.getUserId());
+		map.put("result", result);
+		entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return entity;
 	}
 }

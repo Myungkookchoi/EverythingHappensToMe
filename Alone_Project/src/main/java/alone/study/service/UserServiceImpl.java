@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int checkid(String userId) throws Exception {
 		UserDao dao = sqlSession.getMapper(UserDao.class);
-		int dto = dao.checkid(userId);
-		return dto;
+		int result = dao.checkid(userId);
+		return result;
 	}
 
 	@Override
@@ -69,6 +69,26 @@ public class UserServiceImpl implements UserService {
 		UserDao dao = sqlSession.getMapper(UserDao.class);
 		String userName = dao.userName(userId);
 		return userName;
+	}
+
+	@Override
+	public String findId(UserDto dto) throws Exception {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		String userId = dao.findId(dto);
+		return userId;
+	}
+
+	@Override
+	public int findPassword(UserDto dto) throws Exception {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		int result = dao.findPassword(dto);
+		return result;
+	}
+
+	@Override
+	public void changePassword(UserDto dto) throws Exception {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		dao.changePassword(dto);
 	}
 
 }

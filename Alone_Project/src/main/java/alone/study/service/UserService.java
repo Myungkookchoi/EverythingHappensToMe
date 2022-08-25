@@ -23,4 +23,10 @@ public interface UserService {
 
 	public String userName(String userId) throws Exception;
 
+	public String findId(UserDto dto) throws Exception;
+
+	public int findPassword(UserDto dto) throws Exception;
+
+	public void changePassword(UserDto dto) throws Exception;
+
 }
