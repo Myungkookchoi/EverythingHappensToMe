@@ -1,7 +1,9 @@
 package alone.study.mk;
 
 import java.util.Map;
+import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import alone.study.dto.NoticeBoardDto;
+import alone.study.dto.ReplyDto;
 import alone.study.dto.UserDto;
+import alone.study.service.NoticeBoardService;
+import alone.study.service.ReplyService;
 import alone.study.service.UserService;
+import alone.study.vo.PageMaker;
 
 @RestController
 @RequestMapping("/restful")
@@ -26,6 +33,12 @@ public class RestfulController {
 
 	@Autowired
 	UserService service;
+
+	@Autowired
+	NoticeBoardService bs;
+
+	@Autowired
+	ReplyService rs;
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public void registerGet() throws Exception {
@@ -117,6 +130,34 @@ public class RestfulController {
 		map.put("userId", dto.getUserId());
 		map.put("result", result);
 		entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		return entity;
+	}
+
+	@RequestMapping(value = "/rpdelete", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<String> rpdelete(@RequestBody ReplyDto dto, Principal principal) throws Exception {
+		ResponseEntity<String> entity = null;
+		if (principal.getName().equals(dto.getReplyer()) || principal.getName().equals("admin")) {
+			rs.delete(dto);
+			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("fail", HttpStatus.OK);
+		}
+		return entity;
+	}
+
+	@RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
+	public ResponseEntity<List<Map<String, NoticeBoardDto>>> pagelist(@PathVariable("page") int pn, PageMaker pm,
+			NoticeBoardDto bdto) throws Exception {
+		System.out.println(bs.listSearchCriteria(pm));
+		ResponseEntity<List<Map<String, NoticeBoardDto>>> entity = null;
+//		List<Map<String, NoticeBoardDto>> list = null;
+//		Map<String, NoticeBoardDto> map = new HashMap<String, NoticeBoardDto>();
+//		pm.setPage(pn);
+//		for (int i = 0; i < bs.listSearchCriteria(pm).size(); i++) {
+//			map = .get(i);
+//		}
+
 		return entity;
 	}
 }
